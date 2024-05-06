@@ -1,0 +1,32 @@
+Para instalar
+
+el .env
+Composer dump-autoload
+composer install
+npm install
+npm run watch
+php artisan key:generate
+php artisan session:table
+php artisan migrate
+php artisan db:seed
+Para las imagenes que no salen
+    php artisan storage:link
+php artisan serve
+
+
+
+
+Clone the repo and cd into it
+In your terminal composer install
+Rename or copy .env.example file to .env
+php artisan key:generate
+Set your database credentials in your .env file
+Set your Braintree credentials in your .env file if you want to use PayPal
+Import db file(database/e-shop.sql) into your database (mysql,sql)
+npm install
+npm run watch
+run command[laravel file manager]:- php artisan storage:link
+Edit .env file :- remove APP_URL
+php artisan serve or use virtual host
+Visit localhost:8000 in your browser
+Visit /admin if you want to access the admin panel. Admin Email/Password: admin@gmail.com/1111. User Email/Password: user@gmail.com/1111
