@@ -139,7 +139,7 @@ class ProductController extends Controller
             'cat_id'=>'required|exists:categories,id',
             'child_cat_id'=>'nullable|exists:categories,id',
             'is_featured'=>'sometimes|in:1',
-            'brand_id'=>'nullable|exists:brands,id',
+            'brand_id'=>'required|exists:brands,id',
             'status'=>'required|in:active,inactive',
             'condition'=>'required|in:default,new,hot',
             'price'=>'required|numeric',
@@ -176,7 +176,7 @@ class ProductController extends Controller
     {
         $product=Product::findOrFail($id);
         $status=$product->delete();
-        
+
         if($status){
             request()->session()->flash('success','Product successfully deleted');
         }
