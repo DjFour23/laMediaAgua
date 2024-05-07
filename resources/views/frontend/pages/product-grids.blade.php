@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','E-SHOP || PRODUCT PAGE')
+@section('title','PRODUCT PAGE')
 
 @section('main-content')
 	<!-- Breadcrumbs -->
@@ -10,7 +10,7 @@
                 <div class="col-12">
                     <div class="bread-inner">
                         <ul class="bread-list">
-                            <li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
+                            <li><a href="index1.html">Inicio<i class="ti-arrow-right"></i></a></li>
                             <li class="active"><a href="blog-single.html">Shop Grid</a></li>
                         </ul>
                     </div>
@@ -353,9 +353,9 @@
                                                     <a href="{{route('add-to-wishlist',$product->slug)}}" class="btn min"><i class="ti-heart"></i></a>
                                                 </div>
                                             </form>
-                                            <div class="default-social">
+                                            {{-- <div class="default-social">
                                             <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
