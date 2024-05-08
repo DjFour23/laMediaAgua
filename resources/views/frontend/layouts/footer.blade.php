@@ -24,11 +24,11 @@
 						<div class="single-footer links">
 							<h4>Information</h4>
 							<ul>
-								<li><a href="{{route('about-us')}}">About Us</a></li>
-								<li><a href="#">Faq</a></li>
-								<li><a href="#">Terms & Conditions</a></li>
-								<li><a href="{{route('contact')}}">Contact Us</a></li>
-								<li><a href="#">Help</a></li>
+								<li><a href="{{route('about-us')}}">Acerca de nosotros</a></li>
+								<li><a href="#">Preguntas frecuentes</a></li>
+								<li><a href="#">Terminos y condiciones</a></li>
+								<li><a href="{{route('contact')}}">Contactanos!</a></li>
+								<li><a href="#">Ayuda</a></li>
 							</ul>
 						</div>
 						<!-- End Single Widget -->
