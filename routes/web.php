@@ -167,7 +167,8 @@
         Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
         // Password Change
         Route::get('change-password', [AdminController::class, 'changePassword'])->name('change.password.form');
-        Route::post('change-password', [AdminController::class, 'changPasswordStore'])->name('change.password');
+        // Route::post('change-password', [AdminController::class, 'changPasswordStore'])->name('change.password');
+        Route::post('admin/change-password', [AdminController::class, 'changPasswordStore'])->name('admin.change.password');
     });
 
 
@@ -195,7 +196,8 @@
 
         // Password Change
         Route::get('change-password', [HomeController::class, 'changePassword'])->name('user.change.password.form');
-        Route::post('change-password', [HomeController::class, 'changPasswordStore'])->name('change.password');
+        // Route::post('change-password', [HomeController::class, 'changPasswordStore'])->name('change.password');
+        Route::post('user/change-password', [HomeController::class, 'changPasswordStore'])->name('user.change.password');
 
     });
 
