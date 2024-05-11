@@ -205,6 +205,11 @@
     //     Lfm::routes();
     // });
 
+    // Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    //     Lfm::routes();
+    // })->name('laravel-filemanager.');
+
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-        Lfm::routes();
-    })->name('laravel-filemanager.');
+        Lfm::routes(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth'], 'as' => 'laravel-filemanager.']);
+    })->name('laravel-filemanager.show');
+
