@@ -7,7 +7,8 @@
                 <div class="card-header">Change Password</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('user.change.password') }}">
+                    {{-- <form method="POST" action="{{ route('user.change.password') }}"> --}}
+                    <form method="POST" action="{{ route('change.password') }}">
                         @csrf
 
                          @foreach ($errors->all() as $error)
