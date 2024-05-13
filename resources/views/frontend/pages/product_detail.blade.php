@@ -195,8 +195,8 @@
 																	<div class="review-inner">
 																			<!-- Form -->
 																@auth
-																{{-- <form class="form" method="post" action="{{route('review.store',$product_detail->slug)}}"> --}}
-																<form class="form" method="post" action="{{route('product.review.store',$product_detail->slug)}}">
+																<form class="form" method="post" action="{{route('review.store',$product_detail->slug)}}">
+																{{-- <form class="form" method="post" action="{{route('product.review.store',$product_detail->slug)}}"> --}}
                                                                     @csrf
                                                                     <div class="row">
                                                                         <div class="col-lg-12 col-12">
