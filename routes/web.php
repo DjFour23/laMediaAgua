@@ -49,8 +49,8 @@
     Route::get('user/register', [FrontendController::class, 'register'])->name('register.form');
     Route::post('user/register', [FrontendController::class, 'registerSubmit'])->name('register.submit');
 // Reset password
-    // Route::post('password-reset', [FrontendController::class, 'showResetForm'])->name('password.reset');
-    Route::post('password-reset', [FrontendController::class, 'showResetForm'])->name('password.reset.show');
+    Route::post('password-reset', [FrontendController::class, 'showResetForm'])->name('password.reset');
+    // Route::post('password-reset', [FrontendController::class, 'showResetForm'])->name('password.reset.show');
 // Socialite
     Route::get('login/{provider}/', [LoginController::class, 'redirect'])->name('login.redirect');
     Route::get('login/{provider}/callback/', [LoginController::class, 'Callback'])->name('login.callback');
@@ -105,8 +105,8 @@
 
 // Product Review
     Route::resource('/review', 'ProductReviewController');
-    // Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('review.store');
-    Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('product.review.store');
+    Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('review.store');
+    // Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('product.review.store');
 
 // Post Comment
     Route::post('post/{slug}/comment', [PostCommentController::class, 'store'])->name('post-comment.store');
@@ -167,8 +167,8 @@
         Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
         // Password Change
         Route::get('change-password', [AdminController::class, 'changePassword'])->name('change.password.form');
-        // Route::post('change-password', [AdminController::class, 'changPasswordStore'])->name('change.password');
-        Route::post('admin/change-password', [AdminController::class, 'changPasswordStore'])->name('admin.change.password');
+        Route::post('change-password', [AdminController::class, 'changPasswordStore'])->name('change.password');
+        // Route::post('admin/change-password', [AdminController::class, 'changPasswordStore'])->name('admin.change.password');
     });
 
 
@@ -196,8 +196,8 @@
 
         // Password Change
         Route::get('change-password', [HomeController::class, 'changePassword'])->name('user.change.password.form');
-        // Route::post('change-password', [HomeController::class, 'changPasswordStore'])->name('change.password');
-        Route::post('user/change-password', [HomeController::class, 'changPasswordStore'])->name('user.change.password');
+        Route::post('change-password', [HomeController::class, 'changPasswordStore'])->name('change.password');
+        // Route::post('user/change-password', [HomeController::class, 'changPasswordStore'])->name('user.change.password');
 
     });
 
