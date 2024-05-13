@@ -201,16 +201,12 @@
 
     });
 
-    // Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    //     Lfm::routes();
-    // });
-
-// Renombramos la ruta existente
+// Eliminamos la asignación de nombre automática
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    Lfm::routes(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth'], 'as' => 'lfm.']);
-})->name('lfm.show');
+    Lfm::routes();
+});
 
-// Agregamos una nueva ruta con el nombre deseado
+// Asignamos un nombre personalizado a la ruta
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    Lfm::routes(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth'], 'as' => 'laravel-filemanager.']);
-})->name('laravel-filemanager.show');
+    Lfm::routes(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth'], 'as' => 'custom.filemanager.']);
+});
