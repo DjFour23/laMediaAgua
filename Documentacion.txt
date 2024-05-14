@@ -13,7 +13,25 @@ Para las imagenes que no salen
     php artisan storage:link
 php artisan serve
 
-
+el ami tiene que ser ubuntu, no me jodas
+https://github.com/Michaelyara1107/laravel8-aws
+https://www.youtube.com/watch?v=uNjyopVYqHU&t=809s&ab_channel=MichaelYara
+Antes que se me olvide, seguí el tutorial de el proyecto laravel en aws, al final solo clone el github
+luego hice los pasos
+no me servia una vaina de un paquete de imagen, se busco en internet hasta que funciono
+https://www.geeksforgeeks.org/how-to-install-mysql-on-aws-ec2/
+https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04-es
+luego no estaba el mysql, se instalo con el tutorial de una web (apt isntal) y luego se configuro los usuarios
+luego se puso el comando de create database pero creo que se puede omitir si se pone el phpmyadmin Antes
+para el phpmyadmin se instalo con
+apt instal libapache2-mod-php
+apt install phpmyadmin
+phpenmod mbstring
+systemctl restart apache2
+y como me dejaba tirar el migrate y tal pero no ver la pagina de phpmyadmin tire
+nano /etc/apache2/apache2.conf y al final le agregue  Include /etc/phpmyadmin/apache.conf
+luego un systemctl restart apache2.service
+y ya estaria, entre toda esta maraña toca ir ejecutando los comandos de arriba
 
 
 Clone the repo and cd into it
