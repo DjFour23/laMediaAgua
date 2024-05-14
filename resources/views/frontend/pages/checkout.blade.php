@@ -435,7 +435,7 @@
     <!--/ End Checkout -->
 
     <!-- Start Shop Services Area  -->
-    <section class="shop-services section home">
+    {{-- <section class="shop-services section home">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-12">
@@ -476,7 +476,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- End Shop Services -->
 
     <!-- Start Shop Newsletter  -->

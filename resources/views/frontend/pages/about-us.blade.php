@@ -12,7 +12,7 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a href="index1.html">Inicio<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="blog-single.html">About Us</a></li>
+							<li class="active"><a href="blog-single.html">Sobre nosotros</a></li>
 						</ul>
 					</div>
 				</div>
@@ -53,7 +53,7 @@
 
 
 	<!-- Start Shop Services Area -->
-	<section class="shop-services section">
+	{{-- <section class="shop-services section">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 col-md-6 col-12">
@@ -94,8 +94,8 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> --}}
 	<!-- End Shop Services Area -->
 
-	@include('frontend.layouts.newsletter')
+	{{-- @include('frontend.layouts.newsletter') --}}
 @endsection
