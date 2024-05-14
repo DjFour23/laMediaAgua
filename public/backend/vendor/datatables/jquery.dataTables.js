@@ -14634,6 +14634,7 @@
 							}
 	
 							if ( btnDisplay !== null ) {
+                                console.log(classes.sPageButton);
 								node = $('<a>', {
 										'class': classes.sPageButton+' '+btnClass,
 										'aria-controls': settings.sTableId,

@@ -123,7 +123,7 @@ class OrderController extends Controller
             'first_name' => 'string|required',
             'last_name' => 'string|required',
             'address1' => 'string|required',
-            'address2' => 'string|nullable',
+            'city' => 'string|required',
             'coupon' => 'nullable|numeric',
             'phone' => 'numeric|required',
             'post_code' => 'string|nullable',
@@ -184,10 +184,12 @@ class OrderController extends Controller
         } else if (request('payment_method') == 'payu') {
             // Log::INFO($order_data);
 
-            $apiKey = 'vsS6QO63Lv5VSmPqkEx97HpgiZ';
+            // $apiKey = 'vsS6QO63Lv5VSmPqkEx97HpgiZ'; // el bueno
+            $apiKey = '4Vj8eK4rloUd272L48hsrarnUA';
             $apiLogin = 'jjDFv5QzH8T7Fd4';
-
-            $signature = md5($apiKey."~".$order->id."~".$order_data['order_number']."~".$order_data['total_amount']."~COP");
+            // $merchanId = '1007859'; //el bueno
+            $merchanId = '508029';
+            $signature = md5($apiKey."~".$merchanId."~".$order_data['order_number']."~".$order_data['total_amount']."~COP");
             Log::INFO($signature);
 
                 // '_token' => 'EBarOlUrG6iKS6l1byijYToWR2kC07VtRWUqXQi1',
@@ -211,19 +213,19 @@ class OrderController extends Controller
 
 
             $payuFormData = [
-                'merchantId' => $order->id,
-                'accountId' => '1016644',
-                'description' => 'Pago la media agua PayU',
+                'merchantId' => $merchanId,
                 'referenceCode' => $order_data['order_number'],
-                'amount' => $order_data['total_amount'],
-                // 'tax' => '3193',
-                // 'taxReturnBase' => '16806',
+                'accountId' => '512321',
+                'description' => 'Pago la media agua PayU',
                 'currency' => 'COP',
+                'amount' => $order_data['total_amount'],
+                'tax' => '0',
+                'taxReturnBase' => '0',
                 'signature' => $signature,
-                'test' => '1',
                 'buyerEmail' => $order_data['email'] ,
+                'test' => '1',
                 "shippingAddress" =>  $order_data['address1'] ,
-                // "shippingCity" =>  "Bogotá",
+                "shippingCity" =>  $order_data['city'],
                 "shippingCountry" =>  $order_data['country'],
                 'responseUrl' => 'https://google.com',
                 'confirmationUrl' => 'https://youtube.com',

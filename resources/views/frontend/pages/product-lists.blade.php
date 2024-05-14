@@ -212,8 +212,15 @@
 																@php
 																	$after_discount=($product->price-($product->price*$product->discount)/100);
 																@endphp
-																<span>${{number_format($after_discount,2)}}</span>
-																<del>${{number_format($product->price,2)}}</del>
+																{{-- <span>${{number_format($after_discount,2)}}</span>
+																<del>${{number_format($product->price,2)}}</del> --}}
+                                                                @if ($product->price != $after_discount)
+                                                                <span>${{ number_format($after_discount, 2) }}</span>
+                                                                <del
+                                                                    style="padding-left:4%;">${{ number_format($product->price, 2) }}</del>
+                                                            @else
+                                                                <span>${{ number_format($after_discount, 2) }}</span>
+                                                            @endif
 															</div>
 															<h3 class="title"><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
 														{{-- <p>{!! html_entity_decode($product->summary) !!}</p> --}}
@@ -232,7 +239,7 @@
 							</div>
 							 <div class="row">
                             <div class="col-md-12 justify-content-center d-flex">
-                                {{-- {{$products->appends($_GET)->links()}}  --}}
+                                {{$products->appends($_GET)->links()}} 
                             </div>
                           </div>
 						</div>
@@ -305,13 +312,19 @@
 												@php
 													$after_discount=($product->price-($product->price*$product->discount)/100);
 												@endphp
-												<h3><small><del class="text-muted">${{number_format($product->price,2)}}</del></small>    ${{number_format($after_discount,2)}}  </h3>
+												{{-- <h3><small><del class="text-muted">${{number_format($product->price,2)}}</del></small>    ${{number_format($after_discount,2)}}  </h3> --}}
+                                                @if ($product->price != $after_discount)
+                                                    <h3>${{ number_format($after_discount, 2) }}</h3>
+                                                    <del style="padding-left:4%;">${{ number_format($product->price, 2) }}</del>
+                                                @else
+                                                    <h3>${{ number_format($after_discount, 2) }}</h3>
+                                                @endif
 												<div class="quickview-peragraph">
 													<p>{!! html_entity_decode($product->summary) !!}</p>
 												</div>
 												@if($product->size)
 													<div class="size">
-														<h4>Size</h4>
+														<h4>Talla</h4>
 														<ul>
 															@php
 																$sizes=explode(',',$product->size);

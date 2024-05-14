@@ -333,8 +333,8 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Address Line 2</label>
-                                            <input type="text" name="address2" placeholder="" value="{{old('address2')}}">
+                                            <label>Ciudad<span>*</span></label>
+                                            <input type="text" name="city" placeholder="" value="{{old('city')}}">
                                             @error('address2')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
