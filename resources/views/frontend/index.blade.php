@@ -106,7 +106,7 @@
                              <!-- Start Single Tab -->
                             @if($product_lists)
                             @php
-                                dd($product_lists);
+                                // dd($product_lists);
                             // dd($photo);
                             @endphp
                                 @foreach($product_lists as $key=>$product)
