@@ -220,7 +220,7 @@
                                                             <div class="product-action">
                                                                 <a data-toggle="modal" data-target="#{{ $product->id }}"
                                                                     title="Quick View" href="#"><i
-                                                                        class=" ti-eye"></i><span>Quick Shop</span></a>
+                                                                        class=" ti-eye"></i><span>Compra rapida</span></a>
                                                                 <a title="Wishlist"
                                                                     href="{{ route('add-to-wishlist', $product->slug) }}"
                                                                     class="wishlist" data-id="{{ $product->id }}"><i

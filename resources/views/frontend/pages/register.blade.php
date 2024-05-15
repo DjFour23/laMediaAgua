@@ -10,8 +10,8 @@
                 <div class="col-12">
                     <div class="bread-inner">
                         <ul class="bread-list">
-                            <li><a href="{{route('home')}}">Home<i class="ti-arrow-right"></i></a></li>
-                            <li class="active"><a href="javascript:void(0);">Register</a></li>
+                            <li><a href="{{route('home')}}">Inicio<i class="ti-arrow-right"></i></a></li>
+                            <li class="active"><a href="javascript:void(0);">Registro</a></li>
                         </ul>
                     </div>
                 </div>
@@ -26,15 +26,15 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3 col-12">
                     <div class="login-form">
-                        <h2>Register</h2>
-                        <p>Please register in order to checkout more quickly</p>
+                        <h2>Registro</h2>
+                        {{-- <p>Please register in order to checkout more quickly</p> --}}
                         <!-- Form -->
                         <form class="form" method="post" action="{{route('register.submit')}}">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Your Name<span>*</span></label>
+                                        <label>Nombre<span>*</span></label>
                                         <input type="text" name="name" placeholder="" required="required" value="{{old('name')}}">
                                         @error('name')
                                             <span class="text-danger">{{$message}}</span>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Your Email<span>*</span></label>
+                                        <label>Email<span>*</span></label>
                                         <input type="text" name="email" placeholder="" required="required" value="{{old('email')}}">
                                         @error('email')
                                             <span class="text-danger">{{$message}}</span>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Your Password<span>*</span></label>
+                                        <label>Contraseña<span>*</span></label>
                                         <input type="password" name="password" placeholder="" required="required" value="{{old('password')}}">
                                         @error('password')
                                             <span class="text-danger">{{$message}}</span>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Confirm Password<span>*</span></label>
+                                        <label>Confirmar contraseña<span>*</span></label>
                                         <input type="password" name="password_confirmation" placeholder="" required="required" value="{{old('password_confirmation')}}">
                                         @error('password_confirmation')
                                             <span class="text-danger">{{$message}}</span>
@@ -70,12 +70,12 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group login-btn">
-                                        <button class="btn" type="submit">Register</button>
-                                        <a href="{{route('login.form')}}" class="btn">Login</a>
-                                        OR
+                                        <button class="btn" type="submit">Registro</button>
+                                        <a href="{{route('login.form')}}" class="btn">Inicio de sesión</a>
+                                        {{-- OR
                                         <a href="{{route('login.redirect','facebook')}}" class="btn btn-facebook"><i class="ti-facebook"></i></a>
                                         <a href="{{route('login.redirect','github')}}" class="btn btn-github"><i class="ti-github"></i></a>
-                                        <a href="{{route('login.redirect','google')}}" class="btn btn-google"><i class="ti-google"></i></a>
+                                        <a href="{{route('login.redirect','google')}}" class="btn btn-google"><i class="ti-google"></i></a> --}}
                                     </div>
                                 </div>
                             </div>
