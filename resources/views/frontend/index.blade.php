@@ -90,7 +90,7 @@
                                 @endphp
                                 @if($categories)
                                 <button class="btn" style="background:black"data-filter="*">
-                                    All Products
+                                    Todos los productos
                                 </button>
                                     @foreach($categories as $key=>$cat)
 
@@ -105,6 +105,10 @@
                         <div class="tab-content isotope-grid" id="myTabContent">
                              <!-- Start Single Tab -->
                             @if($product_lists)
+                            @php
+                                dd($product_lists);
+                            // dd($photo);
+                            @endphp
                                 @foreach($product_lists as $key=>$product)
                                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$product->cat_id}}">
                                     <div class="single-product">
@@ -117,13 +121,13 @@
                                                 <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
                                                 <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
                                                 @if($product->stock<=0)
-                                                    <span class="out-of-stock">Sale out</span>
+                                                    <span class="out-of-stock">Sin stock</span>
                                                 @elseif($product->condition=='new')
-                                                    <span class="new">New</span
+                                                    <span class="new">Nuevo</span
                                                 @elseif($product->condition=='hot')
-                                                    <span class="hot">Hot</span>
+                                                    <span class="hot">Nueva producto</span>
                                                 @else
-                                                    <span class="price-dec">{{$product->discount}}% Off</span>
+                                                    <span class="price-dec">{{$product->discount}}% descuento</span>
                                                 @endif
 
 
@@ -134,7 +138,7 @@
                                                     <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" ><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
                                                 </div>
                                                 <div class="product-action-2">
-                                                    <a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
+                                                    <a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Añadir al carrito</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -189,8 +193,8 @@
                             <img src="{{$photo[0]}}" alt="{{$photo[0]}}">
                             <div class="content">
                                 <p>{{$data->cat_info['title']}}</p>
-                                <h3>{{$data->title}} <br>Up to<span> {{$data->discount}}%</span></h3>
-                                <a href="{{route('product-detail',$data->slug)}}">Shop Now</a>
+                                <h3>{{$data->title}} <br>Hasta el <span> {{$data->discount}}%</span></h3>
+                                <a href="{{route('product-detail',$data->slug)}}">Compra ahora!</a>
                             </div>
                         </div>
                     </div>
