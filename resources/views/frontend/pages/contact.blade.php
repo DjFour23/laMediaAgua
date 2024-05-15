@@ -8,8 +8,8 @@
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="{{route('home')}}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="javascript:void(0);">Contact</a></li>
+							<li><a href="{{route('home')}}">Inicio<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="javascript:void(0);">Contactanos</a></li>
 						</ul>
 					</div>
 				</div>
@@ -29,40 +29,40 @@
 									@php
 										$settings=DB::table('settings')->get();
 									@endphp
-									<h4>Get in touch</h4>
-									<h3>Write us a message @auth @else<span style="font-size:12px;" class="text-danger">[You need to login first]</span>@endauth</h3>
+									<h4>Mantente en contacto</h4>
+									<h3>Escribenos un mensaje! @auth @else<span style="font-size:12px;" class="text-danger">[Necesitas iniciar sesion]</span>@endauth</h3>
 								</div>
 								<form class="form-contact form contact_form" method="post" action="{{route('contact.store')}}" id="contactForm" novalidate="novalidate">
 									@csrf
 									<div class="row">
 										<div class="col-lg-6 col-12">
 											<div class="form-group">
-												<label>Your Name<span>*</span></label>
-												<input name="name" id="name" type="text" placeholder="Enter your name">
+												<label>Nombre<span>*</span></label>
+												<input name="name" id="name" type="text" placeholder="Nombre">
 											</div>
 										</div>
 										<div class="col-lg-6 col-12">
 											<div class="form-group">
-												<label>Your Subjects<span>*</span></label>
-												<input name="subject" type="text" id="subject" placeholder="Enter Subject">
+												<label>Asunto<span>*</span></label>
+												<input name="subject" type="text" id="subject" placeholder="Asunto">
 											</div>
 										</div>
 										<div class="col-lg-6 col-12">
 											<div class="form-group">
-												<label>Your Email<span>*</span></label>
-												<input name="email" type="email" id="email" placeholder="Enter email address">
+												<label>Email<span>*</span></label>
+												<input name="email" type="email" id="email" placeholder="Direccion email">
 											</div>
 										</div>
 										<div class="col-lg-6 col-12">
 											<div class="form-group">
-												<label>Your Phone<span>*</span></label>
-												<input id="phone" name="phone" type="number" placeholder="Enter your phone">
+												<label>Telefono<span>*</span></label>
+												<input id="phone" name="phone" type="number" placeholder="Telefono">
 											</div>
 										</div>
 										<div class="col-12">
 											<div class="form-group message">
-												<label>your message<span>*</span></label>
-												<textarea name="message" id="message" cols="30" rows="9" placeholder="Enter Message"></textarea>
+												<label>Mensaje<span>*</span></label>
+												<textarea name="message" id="message" cols="30" rows="9" placeholder="Mensaje"></textarea>
 											</div>
 										</div>
 										<div class="col-12">
@@ -78,7 +78,7 @@
 							<div class="single-head">
 								<div class="single-info">
 									<i class="fa fa-phone"></i>
-									<h4 class="title">Call us Now:</h4>
+									<h4 class="title">Llamanos!:</h4>
 									<ul>
 										<li>@foreach($settings as $data) {{$data->phone}} @endforeach</li>
 									</ul>
@@ -92,7 +92,7 @@
 								</div>
 								<div class="single-info">
 									<i class="fa fa-location-arrow"></i>
-									<h4 class="title">Our Address:</h4>
+									<h4 class="title">Direccion:</h4>
 									<ul>
 										<li>@foreach($settings as $data) {{$data->address}} @endforeach</li>
 									</ul>
