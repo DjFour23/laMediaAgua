@@ -184,13 +184,16 @@ class OrderController extends Controller
         } else if (request('payment_method') == 'payu') {
             // Log::INFO($order_data);
 
-            // $apiKey = 'vsS6QO63Lv5VSmPqkEx97HpgiZ'; // el bueno
+            // $apiKey = 'vsS6QO63Lv5VSmPqkEx97HpgiZ'; // el bueno (de mi cuenta)
+            // $apiKey = 'WFrVmvg6s3Ex7jPQ776H6fz1z1'; // el bueno (de cuenta madre)
             $apiKey = '4Vj8eK4rloUd272L48hsrarnUA';
+            // $apiLogin = 'kuunz4mmL90mU4v'; // el bueno (de cuenta madre)
             $apiLogin = 'jjDFv5QzH8T7Fd4';
-            // $merchanId = '1007859'; //el bueno
+            // $merchanId = '1007859'; //el bueno (de mi cuenta)
+            // $merchanId = '1008657'; //el bueno (de cuenta madre)
             $merchanId = '508029';
             $signature = md5($apiKey."~".$merchanId."~".$order_data['order_number']."~".$order_data['total_amount']."~COP");
-            Log::INFO($signature);
+            // Log::INFO($signature);
 
                 // '_token' => 'EBarOlUrG6iKS6l1byijYToWR2kC07VtRWUqXQi1',
                 // 'first_name' => 'diego',
@@ -227,13 +230,36 @@ class OrderController extends Controller
                 "shippingAddress" =>  $order_data['address1'] ,
                 "shippingCity" =>  $order_data['city'],
                 "shippingCountry" =>  $order_data['country'],
-                'responseUrl' => 'https://google.com',
-                'confirmationUrl' => 'https://youtube.com',
+                'responseUrl' => route('home'),
+                'confirmationUrl' => route('about-us'),
             ];
+            Log::INFO('Nueva vaina -----------------');
+
             Log::INFO(json_encode($payuFormData));
 
+            $order_data['payment_method'] = 'payu';
+            $order_data['payment_status'] = 'processPayu';
+            $order->fill($order_data);
+            $status = $order->save();
+            if ($status) {
+                $users   = User::where('role', 'admin')->first();
+                $details = [
+                    'title' => 'Nueva orden de compra creada (PayU)',
+                    'actionURL' => route('order.show', $order->id),
+                    'fas' => 'fa-file-alt'
+                ];
+                Notification::send($users, new StatusNotification($details));
+                session()->forget('cart');
+                session()->forget('coupon');
+                Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
+
+                request()->session()->flash('success', 'Your product successfully placed in order');
+                return view('frontend.auto_submit_payu_form')->with('payuFormData', $payuFormData);
+            } else {
+                request()->session()->flash('error', 'Error occurred while processing the order');
+                return back();
+            }
             // Devolver la vista con el formulario de PayU
-            return view('frontend.auto_submit_payu_form')->with('payuFormData', $payuFormData);
         } else {
             $order_data['payment_method'] = 'cod';
             $order_data['payment_status'] = 'Unpaid';

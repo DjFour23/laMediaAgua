@@ -93,7 +93,7 @@
                     </tr>
                     <tr>
                         <td>Payment Method</td>
-                        <td> : @if($order->payment_method=='cod') Contra entrega @else Paypal @endif</td>
+                        <td> : @if($order->payment_method=='cod') Contra entrega @elseif ($order->payment_method=='payu') PayU @else Paypal @endif</td>
                     </tr>
                     <tr>
                         <td>Payment Status</td>
