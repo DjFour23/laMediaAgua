@@ -9,6 +9,7 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "calcinai/php-imagick": "^0.1.2",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "*",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/socialite": "^5.6",
