@@ -27,20 +27,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-
-
     public function index(){
         return view('user.index');
     }
 
     public function profile(){
         $profile=Auth()->user();
-        // return $profile;
         return view('user.users.profile')->with('profile',$profile);
     }
 
     public function profileUpdate(Request $request,$id){
-        // return $request->all();
         $user=User::findOrFail($id);
         $data=$request->all();
         $status=$user->fill($data)->save();
@@ -58,26 +54,32 @@ class HomeController extends Controller
         $orders=Order::orderBy('id','DESC')->where('user_id',auth()->user()->id)->paginate(10);
         return view('user.order.index')->with('orders',$orders);
     }
+
     public function userOrderDelete($id)
     {
-        $order=Order::find($id);
+        $order = Order::where('user_id', auth()->user()->id)->where('id', $id)->first();
+
         if($order){
-           if($order->status=="process" || $order->status=='delivered' || $order->status=='cancel'){
-                return redirect()->back()->with('error','You can not delete this order now');
-           }
-           else{
-                $status=$order->delete();
+            // Si la orden ya está en proceso, entregada o cancelada, no se modifica
+            if($order->status == "process" || $order->status == 'delivered' || $order->status == 'cancel'){
+                return redirect()->back()->with('error', 'No puedes cancelar este pedido porque ya está en proceso o entregado.');
+            }
+            else{
+                // En lugar de borrar la orden, cambiamos su estado a 'cancel'
+                $order->status = 'cancel';
+                $status = $order->save();
+
                 if($status){
-                    request()->session()->flash('success','Order Successfully deleted');
+                    request()->session()->flash('success', 'Pedido cancelado correctamente');
                 }
                 else{
-                    request()->session()->flash('error','Order can not deleted');
+                    request()->session()->flash('error', 'No se pudo cancelar el pedido');
                 }
                 return redirect()->route('user.order.index');
-           }
+            }
         }
         else{
-            request()->session()->flash('error','Order can not found');
+            request()->session()->flash('error', 'Pedido no encontrado');
             return redirect()->back();
         }
     }
@@ -85,9 +87,9 @@ class HomeController extends Controller
     public function orderShow($id)
     {
         $order=Order::find($id);
-        // return $order;
         return view('user.order.show')->with('order',$order);
     }
+
     // Product Review
     public function productReviewIndex(){
         $reviews=ProductReview::getAllUserReview();
@@ -97,7 +99,6 @@ class HomeController extends Controller
     public function productReviewEdit($id)
     {
         $review=ProductReview::find($id);
-        // return $review;
         return view('user.review.edit')->with('review',$review);
     }
 
@@ -152,26 +153,18 @@ class HomeController extends Controller
         $comments=PostComment::getAllUserComments();
         return view('user.comment.index')->with('comments',$comments);
     }
-    public function userCommentDelete($id){
-        $comment=PostComment::find($id);
-        if($comment){
-            $status=$comment->delete();
-            if($status){
-                request()->session()->flash('success','Post Comment successfully deleted');
-            }
-            else{
-                request()->session()->flash('error','Error occurred please try again');
-            }
-            return back();
-        }
-        else{
-            request()->session()->flash('error','Post Comment not found');
-            return redirect()->back();
-        }
+
+    public function userCommentDelete($id)
+    {
+        // Bloqueo de seguridad: los usuarios no pueden eliminar sus comentarios para proteger la integridad de las publicaciones
+        request()->session()->flash('error', 'Los comentarios publicados no pueden ser eliminados por el usuario.');
+        return redirect()->back();
     }
+
     public function userCommentEdit($id)
     {
-        $comments=PostComment::find($id);
+        // Validación de propiedad para la vista de detalle
+        $comments = PostComment::where('user_id', auth()->user()->id)->where('id', $id)->first();
         if($comments){
             return view('user.comment.edit')->with('comment',$comments);
         }
@@ -190,29 +183,16 @@ class HomeController extends Controller
      */
     public function userCommentUpdate(Request $request, $id)
     {
-        $comment=PostComment::find($id);
-        if($comment){
-            $data=$request->all();
-            // return $data;
-            $status=$comment->fill($data)->update();
-            if($status){
-                request()->session()->flash('success','Comment successfully updated');
-            }
-            else{
-                request()->session()->flash('error','Something went wrong! Please try again!!');
-            }
-            return redirect()->route('user.post-comment.index');
-        }
-        else{
-            request()->session()->flash('error','Comment not found');
-            return redirect()->back();
-        }
-
+        // CONTROL DE SEGURIDAD:
+        // Los usuarios normales no deben tener autorización para editar comentarios ni cambiar el estado de moderación.
+        request()->session()->flash('error', 'No tienes permisos para modificar los comentarios enviados.');
+        return redirect()->route('user.post-comment.index');
     }
 
     public function changePassword(){
         return view('user.layouts.userPasswordChange');
     }
+
     public function changPasswordStore(Request $request)
     {
         $request->validate([
@@ -225,6 +205,4 @@ class HomeController extends Controller
    
         return redirect()->route('user')->with('success','Password successfully changed');
     }
-
-    
 }

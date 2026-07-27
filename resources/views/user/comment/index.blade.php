@@ -5,7 +5,7 @@
  <div class="card shadow mb-4">
      <div class="row">
          <div class="col-md-12">
-            @include('backend.layouts.notification')
+            @include('user.layouts.notification')
          </div>
      </div>
     <div class="card-header py-3">
@@ -41,8 +41,8 @@
             @foreach($comments as $comment)
                 <tr>
                     <td>{{$comment->id}}</td>
-                    <td>{{$comment->user_info['name']}}</td>
-                    <td>{{$comment->post->title}}</td>
+                    <td>{{$comment->user_info['name'] ?? 'Usuario'}}</td>
+                    <td>{{$comment->post->title ?? 'Post no disponible'}}</td>
                     <td>{{$comment->comment}}</td>
                     <td>{{$comment->created_at->format('M d D, Y g: i a')}}</td>
                     <td>
@@ -53,18 +53,15 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{route('user.post-comment.edit',$comment->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                        <form method="POST" action="{{route('user.post-comment.delete',[$comment->id])}}">
-                          @csrf
-                          @method('delete')
-                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$comment->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                        </form>
+                        <!-- Únicamente Botón Ver Detalle (Solo lectura) -->
+                        <a href="{{route('user.post-comment.edit',$comment->id)}}" class="btn btn-warning btn-sm" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="Ver Detalle" data-placement="bottom">
+                            <i class="fas fa-eye"></i>
+                        </a>
                     </td>
                 </tr>
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$comments->links()}}</span>
         @else
           <h6 class="text-center">No post comments found!!!</h6>
         @endif
@@ -75,12 +72,6 @@
 
 @push('styles')
   <link href="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-  <style>
-      div.dataTables_wrapper div.dataTables_paginate{
-          display: none;
-      }
-  </style>
 @endpush
 
 @push('scripts')
@@ -88,54 +79,17 @@
   <!-- Page level plugins -->
   <script src="{{asset('backend/vendor/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-
-      $('#order-dataTable').DataTable( {
+      $('#order-dataTable').DataTable({
             "columnDefs":[
                 {
                     "orderable":false,
                     "targets":[5,6]
                 }
             ]
-        } );
-
-        // Sweet alert
-
-        function deleteData(id){
-
-        }
-  </script>
-  <script>
-      $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-          $('.dltBtn').click(function(e){
-            var form=$(this).closest('form');
-              var dataID=$(this).data('id');
-              // alert(dataID);
-              e.preventDefault();
-              swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this data!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                       form.submit();
-                    } else {
-                        swal("Your data is safe!");
-                    }
-                });
-          })
-      })
+      });
   </script>
 @endpush
