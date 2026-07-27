@@ -426,6 +426,9 @@
     <style>
         .pagination {
             display: inline-flex;
+            background: #F7941D;
+            height:20px;
+
         }
 
         .filter_button {

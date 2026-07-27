@@ -190,7 +190,7 @@ a {
 /* Items */
 
 #pagination > ul.pagination {
-  justify-content: center;
+  justify-content: left;
 }
 
 #pagination.preserve_actions_space {
