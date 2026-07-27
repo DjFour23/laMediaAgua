@@ -39,7 +39,7 @@
               <th>Total Amount</th>
               <th>Status</th>
               <th>Action</th>
-              </tr>
+            </tr>
           </tfoot>
           <tbody>
             @foreach($orders as $order)
@@ -49,7 +49,7 @@
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
-                    <td>${{$order->shipping->price}}</td>
+                    <td>${{$order->shipping->price ?? '0'}}</td>
                     <td>${{number_format($order->total_amount,2)}}</td>
                     <td>
                         @if($order->status=='new')
@@ -63,12 +63,17 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{route('user.order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                        <form method="POST" action="{{route('user.order.delete',[$order->id])}}">
-                          @csrf
-                          @method('delete')
-                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                        </form>
+                        <!-- Botón Ver Detalle -->
+                        <a href="{{route('user.order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="Ver Detalle" data-placement="bottom"><i class="fas fa-eye"></i></a>
+                        
+                        <!-- Solo se permite cancelar si el estado es 'new' -->
+                        @if($order->status == 'new')
+                            <form method="POST" action="{{route('user.order.delete',[$order->id])}}" class="float-left">
+                              @csrf
+                              @method('delete')
+                              <button class="btn btn-danger btn-sm cancelBtn" data-id="{{$order->id}}" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Cancelar Pedido"><i class="fas fa-ban"></i></button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -103,7 +108,6 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-
       $('#order-dataTable').DataTable( {
             "columnDefs":[
                 {
@@ -112,12 +116,6 @@
                 }
             ]
         } );
-
-        // Sweet alert
-
-        function deleteData(id){
-
-        }
   </script>
   <script>
       $(document).ready(function(){
@@ -126,23 +124,19 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-          $('.dltBtn').click(function(e){
-            var form=$(this).closest('form');
-              var dataID=$(this).data('id');
-              // alert(dataID);
+          $('.cancelBtn').click(function(e){
+              var form=$(this).closest('form');
               e.preventDefault();
               swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this data!",
+                    title: "¿Estás seguro?",
+                    text: "El pedido pasará a estar cancelado.",
                     icon: "warning",
-                    buttons: true,
+                    buttons: ["Volver", "Sí, cancelar"],
                     dangerMode: true,
                 })
-                .then((willDelete) => {
-                    if (willDelete) {
+                .then((willCancel) => {
+                    if (willCancel) {
                        form.submit();
-                    } else {
-                        swal("Your data is safe!");
                     }
                 });
           })

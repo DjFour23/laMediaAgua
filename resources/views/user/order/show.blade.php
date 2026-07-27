@@ -4,7 +4,7 @@
 
 @section('main-content')
 <div class="card">
-<h5 class="card-header">Order
+  <h5 class="card-header">Order
     {{-- <a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a> --}}
   </h5>
   <div class="card-body">
@@ -30,7 +30,7 @@
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
             <td>{{$order->quantity}}</td>
-            <td>${{$order->shipping->price}}</td>
+            <td>${{$order->shipping->price ?? '0'}}</td>
             <td>${{number_format($order->total_amount,2)}}</td>
             <td>
                 @if($order->status=='new')
@@ -44,13 +44,22 @@
                 @endif
             </td>
             <td>
-                <form method="POST" action="{{route('order.destroy',[$order->id])}}">
-                  @csrf
-                  @method('delete')
-                      <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                </form>
+                @if($order->status == 'new')
+                    <form method="POST" action="{{ route('user.order.delete', $order->id) }}">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" 
+                                class="btn btn-warning btn-sm" 
+                                onclick="return confirm('¿Estás seguro de que deseas cancelar este pedido?')" 
+                                data-toggle="tooltip" 
+                                title="Cancelar Pedido">
+                            <i class="fas fa-ban"></i> Cancelar Pedido
+                        </button>
+                    </form>
+                @else
+                    <span class="badge badge-secondary">No Cancelable</span>
+                @endif
             </td>
-
         </tr>
       </tbody>
     </table>
@@ -83,7 +92,7 @@
                           $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
                       @endphp
                         <td>Shipping Charge</td>
-                        <td> :${{$order->shipping->price}}</td>
+                        <td> :${{$order->shipping->price ?? '0'}}</td>
                     </tr>
                     <tr>
                         <td>Total Amount</td>
@@ -91,8 +100,22 @@
                     </tr>
                     <tr>
                       <td>Payment Method</td>
-                      <td> : @if($order->payment_method=='cod') Contra entrega @elseif ($order->payment_method=='payu') PayU @else Paypal @endif</td>
+                      <td> : 
+                        @if($order->payment_method == 'breb')
+                          <span class="badge badge-info">Transferencia Bre-B</span>
+                        @elseif($order->payment_method == 'cod')
+                          Contra entrega
+                        @else
+                          {{ $order->payment_method }}
+                        @endif
+                      </td>
                     </tr>
+                    @if($order->payment_reference)
+                    <tr>
+                      <td>Nº Comprobante / Referencia</td>
+                      <td> : <strong class="text-primary">{{$order->payment_reference}}</strong></td>
+                    </tr>
+                    @endif
                     <tr>
                         <td>Payment Status</td>
                         <td> : {{$order->payment_status}}</td>
@@ -150,6 +173,5 @@
     .order-info h4,.shipping-info h4{
         text-decoration: underline;
     }
-
 </style>
 @endpush
