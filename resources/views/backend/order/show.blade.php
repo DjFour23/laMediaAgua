@@ -30,7 +30,7 @@
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
             <td>{{$order->quantity}}</td>
-            <td>${{$order->shipping->price}}</td>
+            <td>${{$order->shipping->price ?? '0'}}</td>
             <td>${{number_format($order->total_amount,2)}}</td>
             <td>
                 @if($order->status=='new')
@@ -81,7 +81,7 @@
                     </tr>
                     <tr>
                         <td>Shipping Charge</td>
-                        <td> : $ {{$order->shipping->price}}</td>
+                        <td> : $ {{$order->shipping->price ?? '0'}}</td>
                     </tr>
                     <tr>
                       <td>Coupon</td>
@@ -93,8 +93,22 @@
                     </tr>
                     <tr>
                         <td>Payment Method</td>
-                        <td> : @if($order->payment_method=='cod') Contra entrega @elseif ($order->payment_method=='payu') PayU @else Paypal @endif</td>
+                        <td> : 
+                          @if($order->payment_method == 'breb')
+                            <span class="badge badge-info">Transferencia Bre-B</span>
+                          @elseif($order->payment_method == 'cod')
+                            Contra entrega
+                          @else
+                            {{ $order->payment_method }}
+                          @endif
+                        </td>
                     </tr>
+                    @if($order->payment_reference)
+                    <tr>
+                        <td>Nº Comprobante / Referencia</td>
+                        <td> : <strong class="text-primary" style="font-size: 15px;">{{$order->payment_reference}}</strong></td>
+                    </tr>
+                    @endif
                     <tr>
                         <td>Payment Status</td>
                         <td> : {{$order->payment_status}}</td>

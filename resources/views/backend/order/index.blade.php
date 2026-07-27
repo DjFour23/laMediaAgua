@@ -39,7 +39,7 @@
               <th>Total Amount</th>
               <th>Status</th>
               <th>Action</th>
-              </tr>
+            </tr>
           </tfoot>
           <tbody>
             @foreach($orders as $order)  
@@ -78,7 +78,6 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$orders->links()}}</span>
         @else
           <h6 class="text-center">No orders found!!! Please order some products</h6>
         @endif
@@ -90,11 +89,6 @@
 @push('styles')
   <link href="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-  <style>
-      div.dataTables_wrapper div.dataTables_paginate{
-          display: none;
-      }
-  </style>
 @endpush
 
 @push('scripts')
@@ -107,21 +101,14 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-      
-      $('#order-dataTable').DataTable( {
+      $('#order-dataTable').DataTable({
             "columnDefs":[
                 {
                     "orderable":false,
                     "targets":[8]
                 }
             ]
-        } );
-
-        // Sweet alert
-
-        function deleteData(id){
-            
-        }
+      });
   </script>
   <script>
       $(document).ready(function(){
@@ -132,10 +119,9 @@
         });
           $('.dltBtn').click(function(e){
             var form=$(this).closest('form');
-              var dataID=$(this).data('id');
-              // alert(dataID);
-              e.preventDefault();
-              swal({
+            var dataID=$(this).data('id');
+            e.preventDefault();
+            swal({
                     title: "Are you sure?",
                     text: "Once deleted, you will not be able to recover this data!",
                     icon: "warning",
